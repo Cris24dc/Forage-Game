@@ -3,13 +3,16 @@
 set -e
 mkdir -p bin build
 
-# Compile each .cpp file in src/ into build/*.o
+# Compile files inside src/
 for file in src/*.cpp; do
     g++ -c "$file" -o "build/$(basename "${file%.cpp}").o" $(sdl2-config --cflags) -Iinclude
 done
 
-# Link all object files into the final executable
+# Compile main.cpp
+g++ -c main.cpp -o build/main.o $(sdl2-config --cflags) -Iinclude
+
+# Link
 g++ build/*.o -o bin/main.exe $(sdl2-config --libs)
 
-# Run the program
+# Run
 ./bin/main.exe
