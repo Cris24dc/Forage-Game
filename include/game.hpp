@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include "logger.hpp"
+#include "textureManager.hpp"
 #include <SDL2/SDL.h>
 #include <iostream>
 

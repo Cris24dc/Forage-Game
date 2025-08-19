@@ -12,7 +12,7 @@ done
 g++ -c main.cpp -o build/main.o $(sdl2-config --cflags) -Iinclude
 
 # Link
-g++ build/*.o -o bin/main.exe $(sdl2-config --libs)
+g++ build/*.o -o bin/main.exe $(sdl2-config --libs) -lSDL2_image
 
 # Run
 ./bin/main.exe
