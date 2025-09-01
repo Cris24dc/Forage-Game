@@ -1,10 +1,5 @@
 #include "game.hpp"
-
-SDL_Rect dest = {100, 100, 128, 128};
-SDL_Texture* texture1;
-SDL_Texture* texture2;
-SDL_Texture* currentTexture;
-int cnt = 0;
+#include "gameObject.hpp"
 
 Game::Game() {
     this->running = false;
@@ -13,7 +8,11 @@ Game::Game() {
 }
 
 Game::~Game() {
-    logMessage(LogLevel::INFO, "SDL Cleaned");
+    for (auto obj : objects) {
+        delete obj;
+    }
+    objects.clear();
+    
     if (this->renderer) {
         SDL_DestroyRenderer(this->renderer);
         this->renderer = nullptr;
@@ -23,6 +22,8 @@ Game::~Game() {
         this->window = nullptr;
     }
     SDL_Quit();
+
+    logMessage(LogLevel::INFO, "SDL Cleaned");
 }
 
 bool Game::init(const char* title, bool fullscreen) {
@@ -50,8 +51,8 @@ bool Game::init(const char* title, bool fullscreen) {
     }
     logMessage(LogLevel::INFO, "Renderer created");
 
-    texture1 = TextureManager::loadTexture("assets/player/player_front_standing_1.png", this->renderer);
-    texture2 = TextureManager::loadTexture("assets/player/player_front_standing_2.png", this->renderer);
+    // Creezi playerul ca obiect al jocului, nu global
+    objects.push_back(new GameObject(this->renderer, 100, 100));
 
     this->running = true;
     return true;
@@ -67,23 +68,27 @@ void Game::handleEvent() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) this->running = false;
     }
+
+    const Uint8* keystate = SDL_GetKeyboardState(NULL);
+    for (auto obj : objects) {
+        obj->handleInput(keystate);
+    }
 }
 
 void Game::update() {
-    cnt++;
-    if (cnt % 2 == 0) {
-        currentTexture = texture1;
-        SDL_Delay(300);
-    }
-    else {
-        currentTexture = texture2;
-        SDL_Delay(450);
+    for (auto obj : objects) {
+        obj->update();
     }
 }
 
 void Game::render() {
     SDL_SetRenderDrawColor(this->renderer, 140, 105, 232, 0);
+    
     SDL_RenderClear(this->renderer);
-    SDL_RenderCopy(this->renderer, currentTexture, NULL, &dest);
+    
+    for (auto obj : objects) {
+        obj->render();
+    }
+
     SDL_RenderPresent(this->renderer);
 }
