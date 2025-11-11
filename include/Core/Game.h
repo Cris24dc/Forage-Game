@@ -1,14 +1,24 @@
-#include <Core/Window.h>
+#pragma once
 
-#include <memory>
+#include <Core/Window.h>
+#include <Core/Registry.h>
+#include <Core/Timer.h>
+#include <Core/RenderSystem.h>
+#include <Core/MovementSystem.h>
+#include <Core/AnimationSystem.h>
 
 namespace Core {
     class Game {
     private:
-        Window win_obj;
-        bool isRunning;
+        std::unique_ptr<Window> _window;
+        std::unique_ptr<Registry> _registry;
+        std::unique_ptr<Timer> _timer;
+        std::unique_ptr<RenderSystem> _renderSystem;
+        std::unique_ptr<MovementSystem> _movementSystem;
+        std::unique_ptr<AnimationSystem> _animationSystem;
+
     public:
-        Game();
+        Game(std::string name, int width, int height);
         ~Game();
 
         void Run();

@@ -1,7 +1,7 @@
-#include "Core/Game.h"
+#include <Core/Game.h>
 
 int main() {
-    auto game = std::make_unique<Core::Game>();
-    game->Run();
+    Core::Game game("Forage Game", 800, 800);
+    game.Run();
     return 0;
 }
