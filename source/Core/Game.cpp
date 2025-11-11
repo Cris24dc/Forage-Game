@@ -33,7 +33,7 @@ namespace Core {
         loader.LoadMap("assets/maps/lvl1.txt", *_registry);
 
 
-        // auto houseTexture = std::make_shared<Texture>("assets/textures/Objects/House.png");
+        // auto houseTexture = std::make_shared<Graphics::Texture>("assets/textures/Objects/House.png");
 
         // Entity house = _registry->CreateEntity();
 
