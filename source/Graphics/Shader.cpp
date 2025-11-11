@@ -1,11 +1,11 @@
-#include <Core/Shader.h>
+#include <Graphics/Shader.h>
 
 #include <sstream>
 #include <fstream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-namespace Core {
+namespace Graphics {
     Shader::Shader(const std::string &vertexSource, const std::string &fragmentSource) {
         createProgram(vertexSource, fragmentSource);
     }

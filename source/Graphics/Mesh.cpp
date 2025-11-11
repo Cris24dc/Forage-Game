@@ -1,8 +1,8 @@
-#include <Core/Mesh.h>
+#include <Graphics/Mesh.h>
 
 #include <glad/glad.h>
 
-namespace Core {
+namespace Graphics {
     Mesh::Mesh() {
         float vertices[] = {
             -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,

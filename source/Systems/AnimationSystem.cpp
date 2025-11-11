@@ -1,8 +1,8 @@
-#include <Core/AnimationSystem.h>
-#include <Core/Components.h>
+#include <Systems/AnimationSystem.h>
+#include <ECS/Components.h>
 
-namespace Core {
-    void AnimationSystem::Update(Registry& registry, float dt) {
+namespace Systems {
+    void AnimationSystem::Update(ECS::Registry& registry, float dt) {
         for (Entity e = 0; e < MAX_ENTITIES; e++) {
             if (registry.HasSprite(e) && registry.HasSpriteAnimation(e) && registry.HasAnimationState(e)) {
                 

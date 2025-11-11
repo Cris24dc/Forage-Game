@@ -3,7 +3,7 @@
 #include <string>
 #include <cstdint>
 
-namespace Core {
+namespace Graphics {
     class Shader {
     private:
         std::uint32_t _programID;

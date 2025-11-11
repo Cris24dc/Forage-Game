@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace Core {
+namespace Graphics {
     class Mesh {
     private:
         std::uint32_t _vao, _vbo, _ebo;

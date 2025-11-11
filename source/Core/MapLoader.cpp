@@ -1,5 +1,5 @@
 #include <Core/MapLoader.h>
-#include <Core/Components.h>
+#include <ECS/Components.h>
 
 #include <fstream>
 #include <sstream>
@@ -7,14 +7,14 @@
 #include <vector>
 
 namespace Core {
-    MapLoader::MapLoader(std::shared_ptr<Texture> tileSheet, int sheetWidth, int sheetHeight, int tileWidth, int tileHeight)
+    MapLoader::MapLoader(std::shared_ptr<Graphics::Texture> tileSheet, int sheetWidth, int sheetHeight, int tileWidth, int tileHeight)
     : _tileSheet(tileSheet),
         _sheetWidthInTiles(sheetWidth),
         _sheetHeightInTiles(sheetHeight),
         _tileWidth(tileWidth),
         _tileHeight(tileHeight) {}
 
-    void MapLoader::LoadMap(const std::string& filePath, Registry& registry) {
+    void MapLoader::LoadMap(const std::string& filePath, ECS::Registry& registry) {
         std::ifstream file(filePath);
         std::string line;
         

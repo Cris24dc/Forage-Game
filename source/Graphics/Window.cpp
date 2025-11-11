@@ -1,9 +1,9 @@
-#include <Core/Window.h>
+#include <Graphics/Window.h>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-namespace Core {
+namespace Graphics {
     Window::Window(std::string title, int width, int height) {
         _title = title;
         _width = width;

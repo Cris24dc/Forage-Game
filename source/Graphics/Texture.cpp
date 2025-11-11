@@ -1,10 +1,10 @@
-#include <Core/Texture.h>
+#include <Graphics/Texture.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stbi/stb_image.h>
 #include <iostream>
 
-namespace Core {
+namespace Graphics {
     Texture::Texture(const std::string& filepath) {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

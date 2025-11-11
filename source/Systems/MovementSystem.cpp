@@ -1,8 +1,8 @@
-#include <Core/MovementSystem.h>
-#include <Core/Components.h>
+#include <Systems/MovementSystem.h>
+#include <ECS/Components.h>
 
-namespace Core {
-    void MovementSystem::Update(Registry& registry, float dt, GLFWwindow* window) {
+namespace Systems {
+    void MovementSystem::Update(ECS::Registry& registry, float dt, GLFWwindow* window) {
         for (Entity e = 0; e < MAX_ENTITIES; e++) {
             if (registry.HasPlayerInput(e) && registry.HasTransform(e) && registry.HasAnimationState(e)) {
                 

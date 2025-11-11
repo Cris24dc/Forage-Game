@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <glad/glad.h>
 
-namespace Core {
+namespace Graphics {
     class Texture {
     private:
         GLuint _id;

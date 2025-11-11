@@ -1,19 +1,19 @@
-#include <Core/RenderSystem.h>
-#include <Core/Components.h>
+#include <Systems/RenderSystem.h>
+#include <ECS/Components.h>
 
 #include <glm/gtc/type_ptr.hpp>
 
-namespace Core {
+namespace Systems {
     RenderSystem::RenderSystem() {
-        _shader = std::make_unique<Shader>("assets/shaders/default.vert", "assets/shaders/default.frag");
-        _quadMesh = std::make_unique<Mesh>();
+        _shader = std::make_unique<Graphics::Shader>("assets/shaders/default.vert", "assets/shaders/default.frag");
+        _quadMesh = std::make_unique<Graphics::Mesh>();
     }
 
     void RenderSystem::Init(int screenWidth, int screenHeight) {
         _projection = glm::ortho(0.0f, (float)screenWidth, 0.0f, (float)screenHeight, -1.0f, 1.0f);
     }
 
-    void RenderSystem::Draw(Registry& registry) {
+    void RenderSystem::Draw(ECS::Registry& registry) {
         _shader->use();
         
         glUniformMatrix4fv(glGetUniformLocation(_shader->getProgramID(), "uProjection"), 1, GL_FALSE, glm::value_ptr(_projection));

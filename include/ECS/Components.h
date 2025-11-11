@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Core/Texture.h>
+#include <Graphics/Texture.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -26,7 +26,7 @@ struct TransformComponent {
 };
 
 struct SpriteComponent {
-    std::shared_ptr<Core::Texture> texture = nullptr;
+    std::shared_ptr<Graphics::Texture> texture = nullptr;
     glm::vec4 color{1.0f, 1.0f, 1.0f, 1.0f};
     glm::vec2 uvOffset{0.0f, 0.0f};
     glm::vec2 uvScale{1.0f, 1.0f};
@@ -47,7 +47,7 @@ struct AnimationStateComponent {
 };
 
 struct AnimationData {
-    std::shared_ptr<Core::Texture> textureSheet;
+    std::shared_ptr<Graphics::Texture> textureSheet;
     int numCols;
     int numRows;
     float frameDuration;

@@ -1,17 +1,17 @@
 #include <Core/Game.h>
-#include <Core/Components.h>
-#include <Core/Texture.h>
-#include <Core/Window.h>
+#include <ECS/Components.h>
+#include <Graphics/Texture.h>
+#include <Graphics/Window.h>
 #include <Core/MapLoader.h>
 
 namespace Core {
     Game::Game(std::string name, int width, int height) 
-    : _window(std::make_unique<Window>(name, width, height)),
-      _registry(std::make_unique<Registry>()),
+    : _window(std::make_unique<Graphics::Window>(name, width, height)),
+      _registry(std::make_unique<ECS::Registry>()),
       _timer(std::make_unique<Timer>()),
-      _renderSystem(std::make_unique<RenderSystem>()),
-      _movementSystem(std::make_unique<MovementSystem>()),
-      _animationSystem(std::make_unique<AnimationSystem>())
+      _renderSystem(std::make_unique<Systems::RenderSystem>()),
+      _movementSystem(std::make_unique<Systems::MovementSystem>()),
+      _animationSystem(std::make_unique<Systems::AnimationSystem>())
     {
         _renderSystem->Init(width, height);
 
@@ -20,7 +20,7 @@ namespace Core {
         int sheetWidthInTiles = 12;
         int sheetHeightInTiles = 20;
         
-        auto tileSheetTexture = std::make_shared<Texture>("assets/textures/Tiles/Tileset.png");
+        auto tileSheetTexture = std::make_shared<Graphics::Texture>("assets/textures/Tiles/Tileset.png");
         
         Core::MapLoader loader(
             tileSheetTexture, 
@@ -47,8 +47,8 @@ namespace Core {
         // });
 
 
-        auto idleTexture = std::make_shared<Texture>("assets/textures/Player/Idle.png");
-        auto walkTexture = std::make_shared<Texture>("assets/textures/Player/Walk.png");
+        auto idleTexture = std::make_shared<Graphics::Texture>("assets/textures/Player/Idle.png");
+        auto walkTexture = std::make_shared<Graphics::Texture>("assets/textures/Player/Walk.png");
 
         Entity player = _registry->CreateEntity();
 

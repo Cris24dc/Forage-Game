@@ -4,7 +4,7 @@
 
 struct GLFWwindow;
 
-namespace Core {
+namespace Graphics {
     class Window {
     private:
         std::string _title;

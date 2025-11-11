@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Core/Components.h>
+#include <ECS/Components.h>
 
 #include <cstdint>
 #include <array>
@@ -11,7 +11,7 @@
 using Entity = std::uint32_t;
 constexpr std::size_t MAX_ENTITIES = 100;
 
-namespace Core {
+namespace ECS {
     class Registry {
     private:
         std::queue<Entity> _AvailableEntities;
