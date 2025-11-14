@@ -1,7 +1,7 @@
 #include <Graphics/Texture.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stbi/stb_image.h>
+#include <vendor/stbi/stb_image.h>
 #include <iostream>
 
 namespace Graphics {

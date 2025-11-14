@@ -1,6 +1,6 @@
 #include <Graphics/Mesh.h>
 
-#include <glad/glad.h>
+#include <vendor/glad/glad.h>
 
 namespace Graphics {
     Mesh::Mesh() {

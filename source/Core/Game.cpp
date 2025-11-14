@@ -1,84 +1,36 @@
 #include <Core/Game.h>
-#include <ECS/Components.h>
+#include <Components/Components.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Window.h>
-#include <Core/MapLoader.h>
+#include <ECS/Entity.h>
 
 namespace Core {
     Game::Game(std::string name, int width, int height) 
     : _window(std::make_unique<Graphics::Window>(name, width, height)),
-      _registry(std::make_unique<ECS::Registry>()),
+      _renderSystem(std::make_unique<Systems::RenderSystem>(width, height)),
       _timer(std::make_unique<Timer>()),
-      _renderSystem(std::make_unique<Systems::RenderSystem>()),
-      _movementSystem(std::make_unique<Systems::MovementSystem>()),
-      _animationSystem(std::make_unique<Systems::AnimationSystem>())
+      _registry(std::make_unique<ECS::Registry>())
     {
-        _renderSystem->Init(width, height);
-
-
-        int tilePixelSize = 100;
-        int sheetWidthInTiles = 12;
-        int sheetHeightInTiles = 20;
-        
-        auto tileSheetTexture = std::make_shared<Graphics::Texture>("assets/textures/Tiles/Tileset.png");
-        
-        Core::MapLoader loader(
-            tileSheetTexture, 
-            sheetWidthInTiles, 
-            sheetHeightInTiles, 
-            tilePixelSize, 
-            tilePixelSize
-        );
-
-        loader.LoadMap("assets/maps/lvl1.txt", *_registry);
-
-
-        // auto houseTexture = std::make_shared<Graphics::Texture>("assets/textures/Objects/House.png");
-
-        // Entity house = _registry->CreateEntity();
-
-        // _registry->AddTransform(house, TransformComponent{
-        //     .position = {600.0f, 180.0f},
-        //     .scale = {300.0f, 500.0f}
-        // });
-        // _registry->AddSprite(house, SpriteComponent{
-        //     .texture = houseTexture,
-        //     .layer = 2
-        // });
-
+        _registry->registerComponent<Components::Transform>();
+        _registry->registerComponent<Components::Sprite>();
 
         auto idleTexture = std::make_shared<Graphics::Texture>("assets/textures/Player/Idle.png");
         auto walkTexture = std::make_shared<Graphics::Texture>("assets/textures/Player/Walk.png");
-
-        Entity player = _registry->CreateEntity();
-
-        SpriteAnimationComponent animComponent;
-
-        animComponent.animations[AnimationState::Idle] = AnimationData{
-            .textureSheet = idleTexture,
-            .numCols = 4,
-            .numRows = 3,
-            .frameDuration = 0.2f
-        };
-
-        animComponent.animations[AnimationState::Walk] = AnimationData{
-            .textureSheet = walkTexture,
-            .numCols = 6,
-            .numRows = 3,
-            .frameDuration = 0.1f
-        };
         
-        _registry->AddTransform(player, TransformComponent{
+        ECS::Entity player = _registry->CreateEntity();
+        
+        _registry->addComponent<Components::Transform>(player, Components::Transform{
             .position = {100.0f, 100.0f},
             .scale = {200.0f, 200.0f}
         });
-        _registry->AddPlayerInput(player, PlayerInputComponent{});
-        _registry->AddSprite(player, SpriteComponent{ 
+        _registry->addComponent<Components::Sprite>(player, Components::Sprite{ 
             .texture = idleTexture,
-            .layer = 1
+            .rows = 3,
+            .columns = 4
         });
-        _registry->AddAnimationState(player, AnimationStateComponent{});
-        _registry->AddSpriteAnimation(player, animComponent);
+
+        auto& sprite = _registry->getComponent<Components::Sprite>(player);
+        sprite.setSpriteSheetCell(0, 2);
     }
 
     Game::~Game() {}
@@ -87,11 +39,12 @@ namespace Core {
         while (!_window->shouldClose()) {
             float dt = _timer->Tick();
 
-            _movementSystem->Update(*_registry, dt, _window->getWindow());
-            _animationSystem->Update(*_registry, dt);
+            // system updates
 
             _window->clear();
-            _renderSystem->Draw(*_registry);
+            
+            _renderSystem->draw(*_registry);
+
             _window->onUpdate();
         }
     }
